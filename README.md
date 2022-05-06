@@ -3,12 +3,14 @@
 
 ## TODO
 
-- [ ] Use Angular Material UI
+- [x] Use Angular Material UI
 - [x] Chuck Noris Joke generation from API
 - [x] allow user to keep joke
   - [ ] move this to ngrx
-- [ ] allow user to reject joke
-- [ ] show list of jokes, with DATE & Time saved. 
-- [ ] docker buildfiel with nginx server
+- [x] allow user to reject joke
+- [x] show list of jokes, with DATE & Time saved. 
+- [x] handle api call errors.
+- [ ] docker buildfile with nginx server
+- [ ] run instructions
 
 

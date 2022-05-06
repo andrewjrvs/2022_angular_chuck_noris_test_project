@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-card-title>Noris Joke #{{joke.id}}</mat-card-title>
+    <mat-card-content>
+        {{joke.joke}}
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button [class.spinner]="processingAction==='KEEP'" [disabled]="processingAction !== ''" (click)="keep_OnClick()" color="primary">Save Joke</button>
+        <button mat-raised-button [class.spinner]="processingAction==='REJECT'" [disabled]="processingAction !== ''" (click)="reject_OnClick();" color="warn">Reject Joke</button>
+    </mat-card-actions>
+</mat-card>

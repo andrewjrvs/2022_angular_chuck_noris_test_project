@@ -1,0 +1,28 @@
+<table mat-table matSort [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Id"> No. </th>
+        <td mat-cell *matCellDef="let joke"> {{ joke.id }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="joke">
+        <th mat-header-cell *matHeaderCellDef> Joke </th>
+        <td mat-cell *matCellDef="let joke"> {{ joke.joke }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort Date Added"> Added Date </th>
+        <td mat-cell *matCellDef="let joke"> {{ joke.date | date: 'short' }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No joks saved yet.
+        </td>
+    </tr>
+</table>
+<div class="page-action">
+    <button mat-raised-button routerLink="/review" color="primary">Add more jokes</button>
+</div>

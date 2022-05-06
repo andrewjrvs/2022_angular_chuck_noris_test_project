@@ -1,29 +1,20 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-   <mat-icon>menu</mat-icon>
- </button>
- <span>My App</span>
- <span class="example-spacer"></span>
- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-   <mat-icon>favorite</mat-icon>
- </button>
- <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-  <mat-icon>share</mat-icon>
-</button>
+  
+  <a class="header-toolbar-title" routerLink="/">My App</a>
+  <span class="right-button-spacer"></span>
+  <button mat-icon-button class="example-icon" routerLink="/saved" aria-label="Example icon-button with share icon">
+    <mat-icon [matBadge]="jokeCount$ | async" matBadgeColor="accent">list_alt</mat-icon>
+    <!-- Include text description of the icon's meaning for screen-readers -->
+    <span class="cdk-visually-hidden">
+      View Saved Jokes
+    </span>
+    
+  </button>
 </mat-toolbar>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
 
-
-<router-outlet></router-outlet>
-
-<ng-container *ngIf="activeQuote$ | async; let activeQuote">
-  <blockquote *ngIf="activeQuote" > 
-    {{activeQuote.joke}}
-  </blockquote>
-  <button (click)="saveQte_Onclick(activeQuote)">Save Quote</button>
-</ng-container>
-<button (click)="newQte_OnClick();">New Quote</button>
-
-
-<ul>
+<!-- <ul>
   <li *ngFor="let qte of favoriteList$ | async">{{qte.joke}}</li>
-</ul>
+</ul> -->

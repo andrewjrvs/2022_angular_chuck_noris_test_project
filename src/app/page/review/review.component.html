@@ -1,0 +1,17 @@
+<ng-container *ngIf="errorMsg$ | async as msg">
+    <mat-card class="alert" *ngIf="msg" role="alert" class="alert">
+        Lookup error on request, please try again later 
+        Error: [{{msg}}] - <a (click)="triggerNewJokeQuery()">try again</a>
+    </mat-card>
+</ng-container>
+
+<ng-container *ngIf="activeJoke$ | async as activeJoke; else firstload">
+    <app-joke [joke]="activeJoke"
+              [processingAction]="pending"
+            (action)="process_action(activeJoke, $event)"></app-joke>
+    
+</ng-container>
+
+<ng-template #firstload>
+    <mat-spinner></mat-spinner>
+</ng-template>

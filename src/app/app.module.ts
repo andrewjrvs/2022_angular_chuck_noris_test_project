@@ -4,16 +4,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NorisQuoteService } from './noris-quote.service';
-import { NorisQuoteFavsService } from './noris-quote-favs.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NorisJokeService } from './noris-joke.service';
+import { NorisJokeFavsService } from './noris-joke-favs.service';
+import { JokeComponent } from './joke/joke.component';
+import { ReviewComponent } from './page/review/review.component';
+import { SavedComponent } from './page/saved/saved.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    JokeComponent,
+    ReviewComponent,
+    SavedComponent
   ],
   imports: [
     BrowserModule,
@@ -22,9 +33,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatBadgeModule,
+    MatTableModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
   ],
-  providers: [NorisQuoteService, NorisQuoteFavsService],
+  providers: [NorisJokeService, NorisJokeFavsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
