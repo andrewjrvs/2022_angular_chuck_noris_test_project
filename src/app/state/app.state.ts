@@ -1,5 +1,5 @@
-import { FavoritesState } from "./favorite.reducer";
+import { JokeState } from "./joke.reducer";
 
 export interface State {
-    favorites: FavoritesState
+    joke: JokeState
 }

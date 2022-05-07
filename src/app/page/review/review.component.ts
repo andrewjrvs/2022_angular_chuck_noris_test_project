@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, tap } from 'rxjs';
-import { JokeGeneratorService } from '../../joke-generator.service';
+import { filter, Observable, tap } from 'rxjs';
 import { Joke } from '../../models/joke';
-import { addFavorite } from '../../state/favorite.actions';
-import { State } from '../../state';
-
-
-var cnt = 1;
+import { getActiveJoke, State, addFavorite, loadJoke, getActiveJokeLoadError  } from '../../state';
 
 @Component({
   selector: 'app-review',
@@ -16,27 +11,26 @@ var cnt = 1;
 })
 export class ReviewComponent implements OnInit {
 
-  public activeJoke$: Observable<Joke | null>
+  public activeJoke$!: Observable<Joke | undefined>
 
-  public errorMsg$ = new Subject<string | null> ()
+  public errorMsg$!: Observable<string | undefined>
 
   public pending: string = '';
 
   ngOnInit(): void {
     this.pending = 'FIRST_JOKE'
-    this.triggerNewJokeQuery();
-    
+    this.activeJoke$ = this.store.select(getActiveJoke).pipe(
+      // only trigger
+      tap(val => !val && this.pending === 'FIRST_JOKE' && (this.triggerNewJokeQuery())),
+      filter(val => !!val),
+      tap(val => this.pending = '')
+    )
+    this.errorMsg$ = this.store.select(getActiveJokeLoadError).pipe(
+      tap(err => !!err && (this.pending = 'LOOKUP_ERROR'))
+    )
   }
  
-  constructor(private nqSrv: JokeGeneratorService, private store: Store<State>) {
-    this.activeJoke$ = this.nqSrv.activeJoke$.pipe(
-        tap(val => {
-          // resets the process
-          this.errorMsg$.next('');
-          this.pending = '';
-        }),
-    );
-  }
+  constructor(private store: Store<State>) { }
 
   public process_action(jke: Joke, action: string) {
     this.pending = action;
@@ -50,11 +44,7 @@ export class ReviewComponent implements OnInit {
   }
 
   public triggerNewJokeQuery(): void {
-    this.nqSrv.getNewJoke().catch(err => {
-      // process a lookup error;
-      this.pending = 'LOOKUP_ERROR';
-      this.errorMsg$.next(err)
-    });
+    this.store.dispatch(loadJoke());
   }
 
 }

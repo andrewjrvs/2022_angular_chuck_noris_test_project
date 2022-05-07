@@ -18,7 +18,9 @@ import { JokeComponent } from './joke/joke.component';
 import { ReviewComponent } from './page/review/review.component';
 import { SavedComponent } from './page/saved/saved.component';
 import { StoreModule } from '@ngrx/store';
-import { FavoritesReducer } from './state/favorite.reducer';
+import { JokeReducer } from './state/joke.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { JokeEffects } from './state';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { FavoritesReducer } from './state/favorite.reducer';
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    StoreModule.forRoot({ favorites: FavoritesReducer }, {}),
+    StoreModule.forRoot({ joke: JokeReducer }),
+    EffectsModule.forRoot([ JokeEffects ]),
   ],
   providers: [JokeGeneratorService],
   bootstrap: [AppComponent]
