@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { NorisJoke } from './models/noris-joke';
-import { NorisJokeFavsService } from './noris-joke-favs.service';
-import { NorisJokeService } from './noris-joke.service';
+import { map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { getFavoriteJokeList, State } from './state';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +11,8 @@ import { NorisJokeService } from './noris-joke.service';
 export class AppComponent {
   title = '2022_angular_chuck_noris_test_project';
 
-  public jokeCount$ = this.njfSrv.count$;
+  public jokeCount$ = this.store.select(getFavoriteJokeList).pipe(map(l => l.length));
 
-  constructor(private njfSrv: NorisJokeFavsService) {}
+  constructor(private store: Store<State>) {}
   
 }

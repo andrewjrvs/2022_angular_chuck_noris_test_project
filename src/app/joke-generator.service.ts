@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, map, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { NorisJoke, NorisJokeWrapper } from './models/noris-joke';
+import { Joke, JokeWrapper } from './models/joke';
 
 
 var x = 1;
@@ -10,9 +10,9 @@ var x = 1;
 @Injectable({
   providedIn: 'root'
 })
-export class NorisJokeService {
+export class JokeGeneratorService {
 
-  private activeJoke = new Subject<NorisJoke>();
+  private activeJoke = new Subject<Joke>();
 
   public activeJoke$ = this.activeJoke.asObservable();
 
@@ -23,7 +23,7 @@ export class NorisJokeService {
    */
   public async getNewJoke(): Promise<boolean> {
     return new Promise((res, reject) => {
-      this.http$.get<NorisJokeWrapper>(environment.urls.joke_source).pipe(
+      this.http$.get<JokeWrapper>(environment.urls.joke_source).pipe(
         //delay(5000),  // testing Detayed response...
         map(qw => {
           if (qw.type !== "success") {

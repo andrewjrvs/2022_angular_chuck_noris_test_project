@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, Subject, tap } from 'rxjs';
-import { NorisJoke } from 'src/app/models/noris-joke';
-import { NorisJokeFavsService } from 'src/app/noris-joke-favs.service';
-import { NorisJokeService } from 'src/app/noris-joke.service';
+import { JokeGeneratorService } from '../../joke-generator.service';
+import { Joke } from '../../models/joke';
+import { addFavorite } from '../../state/favorite.actions';
+import { State } from '../../state';
+
 
 var cnt = 1;
 
@@ -13,7 +16,7 @@ var cnt = 1;
 })
 export class ReviewComponent implements OnInit {
 
-  public activeJoke$: Observable<NorisJoke | null>
+  public activeJoke$: Observable<Joke | null>
 
   public errorMsg$ = new Subject<string | null> ()
 
@@ -25,7 +28,7 @@ export class ReviewComponent implements OnInit {
     
   }
  
-  constructor(private nqSrv: NorisJokeService, private favsSrv: NorisJokeFavsService) {
+  constructor(private nqSrv: JokeGeneratorService, private store: Store<State>) {
     this.activeJoke$ = this.nqSrv.activeJoke$.pipe(
         tap(val => {
           // resets the process
@@ -35,10 +38,10 @@ export class ReviewComponent implements OnInit {
     );
   }
 
-  public process_action(jke: NorisJoke, action: string) {
+  public process_action(jke: Joke, action: string) {
     this.pending = action;
     if (action === 'KEEP') {
-        this.favsSrv.add(jke);
+      this.store.dispatch(addFavorite({joke: {...jke, date: new Date()}}))
     }
 
     // I'm tempted to log the rejected one here... so if the number comes up again we 'could' auto reject it..

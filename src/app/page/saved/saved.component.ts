@@ -1,13 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Store } from '@ngrx/store';
 import { map, Subscription } from 'rxjs';
-import { NorisJoke } from 'src/app/models/noris-joke';
-import { NorisJokeFavsService } from 'src/app/noris-joke-favs.service';
-
-interface tableList extends NorisJoke {
-  date: Date
-}
+import { JokeStored } from '../../models/joke-stored';
+import { State, getFavoriteJokeList } from '../../state'
 
 @Component({
   selector: 'app-saved',
@@ -19,20 +16,18 @@ export class SavedComponent implements OnInit, OnDestroy, AfterViewInit {
   public displayedColumns: string[] = ['joke', 'date'];
   //public displayedColumns: string[] = ['id', 'joke', 'date'];
 
-  private favUnsub: Subscription ;
+  private favUnsub!: Subscription ;
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  public dataSource = new MatTableDataSource<tableList>([]);
+  public dataSource = new MatTableDataSource<JokeStored>([]);
 
-  constructor(private favSrv: NorisJokeFavsService) {
-    // breaks out the tuple from the fav list, into a tableList
-    this.favUnsub = this.favSrv.list$.pipe(
-      map(tl => tl.map(t => {return { ...t[0], date: (t[1]) }}))
-    ).subscribe(ds => this.dataSource = new MatTableDataSource(ds));
-  }
+  constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
+    this.favUnsub = this.store.select(getFavoriteJokeList).subscribe(jks => {
+      this.dataSource = new MatTableDataSource([...jks]);
+    })
   }
 
   ngOnDestroy(): void {

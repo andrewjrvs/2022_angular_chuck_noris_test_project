@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NorisJoke } from '../models/noris-joke';
+import { Joke } from '../models/joke';
 
 @Component({
   selector: 'app-joke',
@@ -9,7 +9,7 @@ import { NorisJoke } from '../models/noris-joke';
 export class JokeComponent implements OnInit {
 
   @Input()
-  public joke!: NorisJoke
+  public joke!: Joke
 
   @Output()
   public action = new EventEmitter<"KEEP" | "REJECT">();

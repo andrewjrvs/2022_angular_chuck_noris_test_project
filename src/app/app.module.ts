@@ -13,11 +13,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NorisJokeService } from './noris-joke.service';
-import { NorisJokeFavsService } from './noris-joke-favs.service';
+import { JokeGeneratorService } from './joke-generator.service';
 import { JokeComponent } from './joke/joke.component';
 import { ReviewComponent } from './page/review/review.component';
 import { SavedComponent } from './page/saved/saved.component';
+import { StoreModule } from '@ngrx/store';
+import { FavoritesReducer } from './state/favorite.reducer';
 
 @NgModule({
   declarations: [
@@ -39,8 +40,9 @@ import { SavedComponent } from './page/saved/saved.component';
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    StoreModule.forRoot({ favorites: FavoritesReducer }, {}),
   ],
-  providers: [NorisJokeService, NorisJokeFavsService],
+  providers: [JokeGeneratorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

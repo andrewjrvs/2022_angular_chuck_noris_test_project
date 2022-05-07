@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NorisJokeFavsService } from './noris-joke-favs.service';
+import { JokeGeneratorService } from './joke-generator.service';
 
-describe('NorisJokeFavsService', () => {
-  let service: NorisJokeFavsService;
+describe('JokeGeneratorService', () => {
+  let service: JokeGeneratorService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NorisJokeFavsService);
+    service = TestBed.inject(JokeGeneratorService);
   });
 
   it('should be created', () => {
