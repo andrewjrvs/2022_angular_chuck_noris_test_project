@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, delay, map, Observable, Subject, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Joke, JokeWrapper } from './models/joke';
 
@@ -21,7 +21,7 @@ export class JokeGeneratorService {
         if (qw.type !== "success") {
           throw "api request failed";
         } else if (qw?.value?.length < 1) {
-          throw "missing Jokes";
+          throw "missing jokes";
         }
         // if (qw.value[0].id % 8 === 0) {
         //   throw "Number was evenly divisible by 8";
