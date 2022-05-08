@@ -4,9 +4,6 @@ import { catchError, delay, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Joke, JokeWrapper } from './models/joke';
 
-
-var x = 1;
-
 @Injectable({
   providedIn: 'root'
 })
